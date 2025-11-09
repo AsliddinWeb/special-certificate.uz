@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+      <main id="primary" class="site-main">
+        <div class="space-for-header"></div>
+        <section class="tj-page-header section-gap-x" data-bg-image="{{ contact_header.background_image.url }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="tj-page-header-content text-center">
+          <h1 class="tj-page-title">{{ contact_header.title }}</h1>
+          <div class="tj-page-link">
+            <span><i class="tji-home"></i></span>
+            <span>
+              <a href="{% url 'home_page' %}">{{ contact_header.home_link_text }}</a>
+            </span>
+            <span><i class="tji-arrow-right"></i></span>
+            <span>
+              <span>{{ contact_header.title }}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if contact_header.overlay_image %}
+  <div class="page-header-overlay" data-bg-image="{{ contact_header.overlay_image.url }}"></div>
+  {% endif %}
+</section>
+
+        <!-- start: Contact Top Section -->
+<div class="tj-contact-area section-gap">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sec-heading text-center">
+          <span class="sub-title wow fadeInUp" data-wow-delay=".1s">
+            <i class="tji-box"></i>{{ contact_info.subtitle }}
+          </span>
+          <h2 class="sec-title title-anim">
+            <span>{{ contact_info.title_highlight }}</span> {{ contact_info.title|slice:"contact_info.title_highlight|length:" }}
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div class="row row-gap-4">
+      {% for item in contact_info.items.all %}
+      <div class="col-xl-3 col-lg-6 col-sm-6">
+        <div class="contact-item style-2 wow fadeInUp" data-wow-delay="{{ item.animation_delay }}">
+          <div class="contact-icon">
+            <i class="{{ item.icon }}"></i>
+          </div>
+          <h3 class="contact-title">{{ item.title }}</h3>
+
+          {% if item.description %}
+            <p>{{ item.description }}</p>
+          {% endif %}
+
+          {% if item.details.exists %}
+          <ul class="contact-list">
+            {% for detail in item.details.all %}
+            <li {% if detail.is_active %}class="active"{% endif %}>
+              <a href="{{ detail.get_link_url }}">{{ detail.display_text }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<!-- end: Contact Top Section -->
+
+<!-- start: Contact Section -->
+<section class="tj-contact-section-2 section-bottom-gap">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="contact-form wow fadeInUp" data-wow-delay="{{ contact_form_settings.animation_delay }}">
+          <h3 class="title">{{ contact_form_settings.title }}</h3>
+
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="post">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-input">
+                  <input type="text" name="cfName" required placeholder="{{ contact_form_settings.full_name_label }} *">
+
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-input">
+                  <input type="email" name="cfEmail" required placeholder="{{ contact_form_settings.email_label }} *">
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-input">
+                  <input type="tel" name="cfPhone" required placeholder="{{ contact_form_settings.phone_label }} *">
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-input message-input">
+                  <textarea name="cfMessage" id="message" required placeholder="{{ contact_form_settings.message_label }} *"></textarea>
+                </div>
+              </div>
+              <div class="submit-btn">
+                <button class="tj-primary-btn" type="submit">
+                  <span class="btn-text"><span>{{ contact_form_settings.submit_button_text }}</span></span>
+                  <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="map-area wow fadeInUp" data-wow-delay="{{ contact_form_settings.map_animation_delay }}">
+          <iframe src="{{ contact_form_settings.map_url }}"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- end: Contact Section -->
+
+        <!-- start: Cta Section -->
+<section class="tj-cta-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="cta-area">
+          <div class="cta-content">
+            <h2 class="title title-anim">{{ cta_section.title }}</h2>
+            <div class="cta-btn wow fadeInUp" data-wow-delay="{{ cta_section.animation_delay }}">
+              <a class="tj-primary-btn btn-dark" href="{{ cta_section.button_link }}">
+                <span class="btn-text"><span>{{ cta_section.button_text }}</span></span>
+                <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+              </a>
+            </div>
+          </div>
+          <div class="cta-img">
+            <img src="{{ cta_section.background_image.url }}" alt="{{ cta_section.title }}">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- end: Cta Section -->
+      </main>
+
+{% include 'components/footer.html' %}
+    </div>
+  </div>
+{% endblock %}

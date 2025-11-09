@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+      <main id="primary" class="site-main">
+        <div class="space-for-header"></div>
+        <!-- start: Breadcrumb Section -->
+        <section class="tj-page-header section-gap-x" data-bg-image="{{ service_header.background_image.url }}">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="tj-page-header-content text-center">
+                  <h1 class="tj-page-title">{{ service.title }}</h1>
+                  <div class="tj-page-link">
+                    <span><i class="tji-home"></i></span>
+                    <span>
+                      <a href="{% url 'home_page' %}">{{ service_header.home_link_text }}</a>
+                    </span>
+                    <span><i class="tji-arrow-right"></i></span>
+                    <span>
+                      <span>{{ service.title }}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% if service_header.overlay_image %}
+          <div class="page-header-overlay" data-bg-image="{{ service_header.overlay_image.url }}"></div>
+          {% endif %}
+        </section>
+        <!-- end: Breadcrumb Section -->
+
+        <!-- start: Blog Section -->
+        <section class="tj-blog-section section-gap slidebar-stickiy-container">
+          <div class="container">
+            <div class="row row-gap-5">
+              <div class="col-lg-8">
+                <div class="post-details-wrapper">
+                  <div class="blog-images wow fadeInUp" data-wow-delay=".1s">
+                    <img src="{{ service.image.url }}" alt="{{ service.title }}">
+                  </div>
+                  <h2 class="title title-anim">{{ service.title }}</h2>
+                  <div class="blog-text">
+                    <p class="wow fadeInUp" data-wow-delay=".3s">{{ service.description|safe }}</p>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="tj-main-sidebar slidebar-stickiy">
+                  <div class="tj-sidebar-widget service-categories wow fadeInUp" data-wow-delay=".1s">
+                    <h4 class="widget-title">{{ service_header.title }}</h4>
+                    <ul>
+                        {% for category in related_services %}
+                          <li>
+                              <a class="active" href="{% url 'service_detail' category_slug=service.category.slug service_slug=service.slug %}">{{ category.title }}
+                                  <span class="icon"><i class="tji-arrow-right"></i></span>
+                              </a>
+                          </li>
+                        {% endfor %}
+                    </ul>
+                  </div>
+                  <div class="tj-sidebar-widget widget-feature-item wow fadeInUp" data-wow-delay=".3s">
+                    <div class="feature-box">
+                      <div class="feature-content">
+                        <h2 class="title">Special</h2>
+                        <span>Cerfiticate</span>
+                        <a class="read-more feature-contact" href="tel:8321890640">
+                          <i class="tji-phone-3"></i>
+                          <span>{{ footer_settings.phone }}</span>
+                        </a>
+                      </div>
+                      <div class="feature-images">
+                        <img src="{% static 'assets/images/service/service-ad.webp' %}" alt="">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- end: Blog Section -->
+
+        <!-- start: Cta Section -->
+        <section class="tj-cta-section">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <div class="cta-area">
+                  <div class="cta-content">
+                    <h2 class="title title-anim">{{ cta_section.title }}</h2>
+                    <div class="cta-btn wow fadeInUp" data-wow-delay="{{ cta_section.animation_delay }}">
+                      <a class="tj-primary-btn btn-dark" href="{{ cta_section.button_link }}">
+                        <span class="btn-text"><span>{{ cta_section.button_text }}</span></span>
+                        <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="cta-img">
+                    <img src="{{ cta_section.background_image.url }}" alt="{{ cta_section.title }}">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- end: Cta Section -->
+      </main>
+
+{% include 'components/footer.html' %}
+    </div>
+  </div>
+{% endblock %}

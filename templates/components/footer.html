@@ -1,0 +1,197 @@
+{% load static %}
+<!-- start: Footer Section -->
+<footer class="tj-footer-section footer-3 section-gap-x">
+  <div class="footer-main-area">
+    <div class="container">
+      <div class="row justify-content-between">
+        <!-- Footer Logo va Tavsif -->
+        <div class="col-xl-3 col-md-6">
+          <div class="footer-widget footer-col-1 wow fadeInUp" data-wow-delay=".1s">
+            <div class="footer-logo">
+              <a href="/">
+                {% if footer_settings and footer_settings.logo %}
+                  <img src="{{ footer_settings.logo.url }}" alt="{{ site_name }}">
+                {% else %}
+                  <img src="{% static 'assets/images/logos/logo-2.webp' %}" alt="{{ site_name }}">
+                {% endif %}
+              </a>
+            </div>
+            <div class="footer-text">
+              <p>
+                {% if footer_settings and footer_settings.description %}
+                  {{ footer_settings.description }}
+                {% else %}
+                  Special-Certificate — xalqaro darajadagi sertifikatlash va malaka oshirish markazi.
+                  Biz sizning kasbiy rivojlanishingiz uchun eng ishonchli hamkor bo'lamiz.
+                {% endif %}
+              </p>
+            </div>
+
+            {% if footer_settings.show_social_links %}
+            <div class="social-links style-3">
+              <ul>
+                {% if footer_social_links.facebook %}
+                <li><a href="{{ footer_social_links.facebook }}" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
+                {% endif %}
+
+                {% if footer_social_links.instagram %}
+                <li><a href="{{ footer_social_links.instagram }}" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                {% endif %}
+
+                {% if footer_social_links.twitter %}
+                <li><a href="{{ footer_social_links.twitter }}" target="_blank"><i class="fa-brands fa-x-twitter"></i></a></li>
+                {% endif %}
+
+                {% if footer_social_links.linkedin %}
+                <li><a href="{{ footer_social_links.linkedin }}" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                {% endif %}
+
+                {% if footer_social_links.telegram %}
+                <li><a href="{{ footer_social_links.telegram }}" target="_blank"><i class="fa-brands fa-telegram"></i></a></li>
+                {% endif %}
+              </ul>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Dinamik Footer Ustunlari -->
+        {% for column in footer_columns %}
+        <div class="col-xl-3 col-md-6">
+          <div class="footer-widget footer-col-{{ forloop.counter|add:1 }} widget-nav-menu wow fadeInUp" data-wow-delay=".{{ forloop.counter|add:2 }}s">
+            <h5 class="title">{{ column.title }}</h5>
+            <ul>
+              {% for link in column.active_links %}
+              <li>
+                <a href="{{ link.url }}" {% if link.open_new_tab %}target="_blank"{% endif %}>
+                  {% if link.icon %}<i class="{{ link.icon }}"></i>{% endif %}
+                  {{ link.title }}
+                  {% if link.badge_text %}
+                  <span class="badge">{{ link.badge_text }}</span>
+                  {% endif %}
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endfor %}
+
+        <!-- Footer Kontakt Ma'lumotlari (Agar ustunlar 2 tadan kam bo'lsa ko'rsatiladi) -->
+        {% if footer_columns|length < 2 %}
+        <div class="col-xl-3 col-md-6">
+          <div class="footer-widget widget-contact wow fadeInUp" data-wow-delay=".7s">
+            <h5 class="title">Bizning ofis</h5>
+            <div class="footer-contact-info">
+              {% if footer_contact.address %}
+              <div class="contact-item">
+                <span>{{ footer_contact.address }}</span>
+              </div>
+              {% endif %}
+
+              <div class="contact-item">
+                {% if footer_contact.phone %}
+                <a href="tel:{{ footer_contact.phone }}">Tel: {{ footer_contact.phone }}</a>
+                {% endif %}
+
+                {% if footer_contact.email %}
+                <a href="mailto:{{ footer_contact.email }}">Email: {{ footer_contact.email }}</a>
+                {% endif %}
+              </div>
+
+              {% if footer_contact.working_hours %}
+              <div class="contact-item">
+                <span><i class="tji-clock"></i> {{ footer_contact.working_hours }}</span>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Newsletter va Award Logos -->
+  {% if footer_newsletter or footer_awards %}
+  <div class="footer-bottom-area">
+    <div class="container">
+      <div class="row align-items-end">
+        <!-- Award Logos -->
+        {% if footer_awards and footer_awards.show %}
+        <div class="col-lg-3">
+          <div class="award-logo-area wow fadeInUp" data-wow-delay=".3s">
+            {% if footer_awards.logo_1 %}
+            <div class="award-logo">
+              <img src="{{ footer_awards.logo_1.url }}" alt="Award Logo">
+            </div>
+            {% endif %}
+
+            {% if footer_awards.logo_2 %}
+            <div class="award-logo">
+              <img src="{{ footer_awards.logo_2.url }}" alt="Award Logo">
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Newsletter Form -->
+        {% if footer_newsletter and footer_newsletter.enabled %}
+        <div class="{% if footer_awards and footer_awards.show %}col-lg-9{% else %}col-lg-12{% endif %}">
+          <div class="footer-widget widget-subscribe-2 wow fadeInUp" data-wow-delay=".5s">
+            <h3 class="title">{{ footer_newsletter.title }}</h3>
+            <div class="subscribe-form">
+              <form action="{% url 'settings:newsletter_subscribe' %}" method="post" id="newsletter-form">
+                {% csrf_token %}
+                <input type="email" name="email" placeholder="Email manzilingizni kiriting" required>
+                <button type="submit"><i class="tji-plane"></i></button>
+                <label for="agree">
+                  <input id="agree" name="agree" type="checkbox" value="1" required>
+                  Shartlarga roziman
+                  <a href="#">(Terms & Conditions)</a>
+                </label>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Copyright -->
+  <div class="tj-copyright-area-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="copyright-content-area">
+            <div class="copyright-text">
+              <p>
+                &copy; {{ current_year }}
+                {% if footer_copyright.link %}
+                <a href="{{ footer_copyright.link }}">{{ site_name }}</a>
+                {% else %}
+                <a href="/">{{ site_name }}</a>
+                {% endif %}
+                {{ footer_copyright.text }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Shapes -->
+  <div class="bg-shape-1">
+    <img src="{% static 'assets/images/shape/pattern-2.svg' %}" alt="">
+  </div>
+  <div class="bg-shape-2">
+    <img src="{% static 'assets/images/shape/pattern-3.svg' %}" alt="">
+  </div>
+</footer>
+<!-- end: Footer Section -->
+

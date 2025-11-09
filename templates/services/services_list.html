@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+      <main id="primary" class="site-main">
+        <div class="space-for-header"></div>
+        <!-- start: Breadcrumb Section -->
+        <section class="tj-page-header section-gap-x" data-bg-image="{{ service_header.background_image.url }}">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="tj-page-header-content text-center">
+                  <h1 class="tj-page-title">{{ service_header.title }}</h1>
+                  <div class="tj-page-link">
+                    <span><i class="tji-home"></i></span>
+                    <span>
+                      <a href="{% url 'home_page' %}">{{ service_header.home_link_text }}</a>
+                    </span>
+                    <span><i class="tji-arrow-right"></i></span>
+                    <span>
+                      <span>{{ service_header.title }}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% if service_header.overlay_image %}
+          <div class="page-header-overlay" data-bg-image="{{ service_header.overlay_image.url }}"></div>
+          {% endif %}
+        </section>
+        <!-- end: Breadcrumb Section -->
+
+        <!-- start: Service Section -->
+        <section class="tj-service-section service-4 section-gap">
+          <div class="container">
+            <div class="row row-gap-4">
+  {% for service in services %}
+  <div class="col-lg-4 col-md-6">
+    <div class="service-item style-4 wow fadeInUp" data-wow-delay="{{ service.animation_delay }}">
+      <div class="service-icon">
+        <i class="{{ service.icon }}"></i>
+      </div>
+      <div class="service-content">
+        <h4 class="title">
+          <a href="{% url 'service_detail' selected_category.slug service.slug %}">{{ service.title }}</a>
+        </h4>
+        <p class="desc">{{ service.short_description|truncatewords:20 }}</p>
+        <a class="text-btn" href="{% url 'service_detail' selected_category.slug service.slug %}">
+          <span class="btn-text"><span>{{ service_header.read_more_text }}</span></span>
+          <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+        </a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12">
+    <p class="text-center">Bu kategoriyada xizmatlar topilmadi.</p>
+  </div>
+  {% endfor %}
+</div>
+          </div>
+        </section>
+        <!-- end: Service Section -->
+
+
+
+        <!-- start: Cta Section -->
+        <section class="tj-cta-section">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <div class="cta-area">
+                  <div class="cta-content">
+                    <h2 class="title title-anim">{{ cta_section.title }}</h2>
+                    <div class="cta-btn wow fadeInUp" data-wow-delay="{{ cta_section.animation_delay }}">
+                      <a class="tj-primary-btn btn-dark" href="{{ cta_section.button_link }}">
+                        <span class="btn-text"><span>{{ cta_section.button_text }}</span></span>
+                        <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="cta-img">
+                    <img src="{{ cta_section.background_image.url }}" alt="{{ cta_section.title }}">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- end: Cta Section -->
+      </main>
+
+{% include 'components/footer.html' %}
+    </div>
+  </div>
+{% endblock %}

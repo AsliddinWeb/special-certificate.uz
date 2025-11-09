@@ -1,0 +1,86 @@
+{% load static %}
+
+<!doctype html>
+<html class="no-js" lang="uz">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+
+  <!-- Site Title -->
+  <title>Special-CERTIFICATE.UZ</title>
+
+  <!-- Place favicon.ico in the root directory -->
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/images/fav.png' %}">
+
+  {% include 'components/styles.html' %}
+</head>
+
+<body>
+  <div class="body-overlay"></div>
+
+  {% comment %}
+  {% include 'components/loader.html' %}
+  {% endcomment %}
+
+  {% include 'components/header.html' %}
+
+  {% block content %}
+  {% endblock content %}
+
+  {% include 'components/scripts.html' %}
+
+
+<!-- Newsletter AJAX Script (ixtiyoriy) -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const newsletterForm = document.getElementById('newsletter-form');
+
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalBtnContent = submitBtn.innerHTML;
+
+      // Loading holatini ko'rsatish
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+
+      fetch('{% url "settings:newsletter_subscribe_ajax" %}', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Muvaffaqiyatli xabar
+          alert(data.message);
+          newsletterForm.reset();
+        } else {
+          // Xato xabari
+          alert(data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Xatolik yuz berdi. Iltimos, qayta urinib ko\'ring.');
+      })
+      .finally(() => {
+        // Buttonni qayta faollashtirish
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnContent;
+      });
+    });
+  }
+});
+</script>
+</body>
+
+</html>

@@ -1,0 +1,511 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div id="smooth-wrapper">
+    <div id="smooth-content">
+      <main id="primary" class="site-main">
+        <div class="top-space-65"></div>
+
+<!-- Banner Section -->
+<section class="tj-banner-section-2 section-gap-x">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-5">
+        <div class="banner-content-2">
+          <span class="sub-title wow fadeInUp" data-wow-delay=".2s">
+            <i class="{{ banner.sub_title_icon }}"></i> {{ banner.sub_title_text }}
+          </span>
+          <h1 class="banner-title title-anim">{{ banner.main_title_line1 }}<br>{{ banner.main_title_line2 }}
+          <small>{{ banner.main_title_small }}</small>
+          </h1>
+          <div class="btn-area wow fadeInUp" data-wow-delay=".8s">
+            <a class="tj-primary-btn" href="{{ banner.button_link }}">
+              <span class="btn-text"><span>{{ banner.button_text }}</span></span>
+              <span class="btn-icon"><i class="{{ banner.button_icon }}"></i></span>
+            </a>
+            <a class="number" href="tel:{{ banner.phone_number }}">
+              <i class="{{ banner.phone_icon }}"></i>
+              <span>{{ banner.get_formatted_phone }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="banner-img-area wow fadeInUp" data-wow-delay=".3s">
+          <div class="banner-img">
+            <img src="{{ banner.hero_image.url }}" alt="">
+            <div class="brand-name wow fadeIn" data-wow-delay="2.2s">
+              <div class="marquee-vr">
+                <span class="text">{{ banner.marquee_text1 }}<span class="icon">/</span></span>
+                <span class="text">{{ banner.marquee_text2 }}<span class="icon">/</span></span>
+              </div>
+            </div>
+            <div class="growth-box wow fadeInUp" data-wow-delay="1.7s">
+              <img src="{{ banner.growth_image.url }}" alt="">
+            </div>
+          </div>
+          <div class="wow fadeIn" data-wow-delay="2.2s">
+            <div class="banner-author">
+              <h4 class="title">{{ banner.director_name }}</h4>
+              <span class="designation">{{ banner.director_designation }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if banner.bg_shape_1 %}
+  <div class="bg-shape-1">
+    <img src="{{ banner.bg_shape_1.url }}" alt="">
+  </div>
+  {% endif %}
+  {% if banner.bg_shape_2 %}
+  <div class="bg-shape-2">
+    <img src="{{ banner.bg_shape_2.url }}" alt="">
+  </div>
+  {% endif %}
+  <div class="banner-scroll wow fadeInDown" data-wow-delay="2.5s">
+    <a href="{{ banner.scroll_link }}" class="scroll-down">
+      <span><i class="{{ banner.scroll_icon }}"></i></span>
+      {{ banner.scroll_text }}
+    </a>
+  </div>
+</section>
+
+<!-- start: Client Section -->
+<div class="tj-client-section-2 section-gap-x wow fadeInUp" data-wow-delay=".4s">
+  <div class="container-fluid client-container">
+    <div class="row">
+      <div class="col-12">
+        <div class="swiper client-slider client-slider-2">
+          <div class="swiper-wrapper">
+            {% for client in client_logos %}
+            <div class="swiper-slide client-item">
+              <div class="client-logo">
+                {% if client.website_url %}
+                <a href="{{ client.website_url }}" target="_blank" rel="noopener">
+                  <img src="{{ client.logo.url }}" alt="{{ client.name }}">
+                </a>
+                {% else %}
+                <img src="{{ client.logo.url }}" alt="{{ client.name }}">
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end: Client Section -->
+
+<!-- start: Choose Section -->
+<section id="choose" class="tj-choose-section section-gap">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sec-heading style-3 text-center">
+          <span class="sub-title wow fadeInUp" data-wow-delay=".3s">
+            <i class="{{ choose_header.sub_title_icon }}"></i>{{ choose_header.sub_title }}
+          </span>
+          <h2 class="sec-title title-anim">{{ choose_header.main_title }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row row-gap-4 rightSwipeWrap">
+      {% for card in choose_cards %}
+      <div class="col-xl-3 col-md-6">
+        <div class="choose-box style-2 right-swipe">
+          <div class="choose-content">
+            <div class="choose-icon">
+              <i class="{{ card.icon }}"></i>
+            </div>
+            <h4 class="title">{{ card.title }}</h4>
+            <p class="desc">{{ card.description }}</p>
+            <a class="text-btn" href="{{ card.button_link }}">
+              <span class="btn-text"><span>{{ card.button_text }}</span></span>
+              <span class="btn-icon"><i class="{{ card.button_icon }}"></i></span>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- end: Choose Section -->
+
+
+<!-- start: About Section -->
+<section class="tj-about-section-2 section-gap section-gap-x">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-6 col-lg-6 order-lg-1 order-2">
+        <div class="about-img-area style-2 wow fadeInLeft" data-wow-delay=".3s">
+          <div class="about-img overflow-hidden">
+            <img data-speed=".8" src="{{ about_section.main_image.url }}" alt="Laboratoriya rasmi">
+          </div>
+          <div class="box-area">
+            <div class="progress-box wow fadeInUp" data-wow-delay=".3s">
+              <h4 class="title">{{ about_section.progress_box_title }}</h4>
+              <ul class="tj-progress-list">
+                {% for progress in about_section.progress_items.all %}
+                <li>
+                  <h6 class="tj-progress-title">{{ progress.title }}</h6>
+                  <div class="tj-progress">
+                    <span class="tj-progress-percent">{{ progress.percent }}%</span>
+                    <div class="tj-progress-bar" data-percent="{{ progress.percent }}"></div>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 order-lg-2 order-1">
+        <div class="about-content-area">
+          <div class="sec-heading style-3">
+            <span class="sub-title wow fadeInUp" data-wow-delay=".3s">
+              <i class="{{ about_section.sub_title_icon }}"></i>{{ about_section.sub_title }}
+            </span>
+            <h2 class="sec-title title-anim">{{ about_section.main_title }}</h2>
+          </div>
+        </div>
+        <div class="about-bottom-area">
+          <div class="mission-vision-box wow fadeInLeft" data-wow-delay=".5s">
+            <h4 class="title">{{ about_section.mission_title }}</h4>
+            <p class="desc">{{ about_section.mission_description }}</p>
+            <ul class="list-items">
+              <li><i class="tji-check"></i>{{ about_section.mission_item1 }}</li>
+              <li><i class="tji-check"></i>{{ about_section.mission_item2 }}</li>
+              <li><i class="tji-check"></i>{{ about_section.mission_item3 }}</li>
+            </ul>
+          </div>
+          <div class="mission-vision-box wow fadeInRight" data-wow-delay=".5s">
+            <h4 class="title">{{ about_section.vision_title }}</h4>
+            <p class="desc">{{ about_section.vision_description }}</p>
+            <ul class="list-items">
+              <li><i class="tji-check"></i>{{ about_section.vision_item1 }}</li>
+              <li><i class="tji-check"></i>{{ about_section.vision_item2 }}</li>
+              <li><i class="tji-check"></i>{{ about_section.vision_item3 }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="about-btn-area wow fadeInUp" data-wow-delay=".5s">
+          <a class="tj-primary-btn" href="{{ about_section.button_link }}">
+            <span class="btn-text"><span>{{ about_section.button_text }}</span></span>
+            <span class="btn-icon"><i class="{{ about_section.button_icon }}"></i></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if about_section.bg_shape_1 %}
+  <div class="bg-shape-1">
+    <img src="{{ about_section.bg_shape_1.url }}" alt="">
+  </div>
+  {% endif %}
+  {% if about_section.bg_shape_2 %}
+  <div class="bg-shape-2">
+    <img src="{{ about_section.bg_shape_2.url }}" alt="">
+  </div>
+  {% endif %}
+</section>
+<!-- end: About Section -->
+
+
+<!-- start: Service Section -->
+<section class="tj-service-section service-3 section-gap">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="sec-heading style-3 text-center">
+          <span class="sub-title wow fadeInUp" data-wow-delay=".3s">
+            <i class="{{ service_header.sub_title_icon }}"></i>{{ service_header.sub_title }}
+          </span>
+          <h2 class="sec-title title-anim">{{ service_header.main_title }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="service-wrapper">
+          {% for service in services %}
+          <div class="service-item style-3 wow fadeInUp" data-wow-delay=".3s">
+            <div class="service-content-wrap">
+              <div class="service-title">
+                <div class="service-icon">
+                  <i class="{{ service.icon }}"></i>
+                </div>
+                <h4 class="title"><a href="{{ service.detail_link }}">{{ service.title }}</a></h4>
+              </div>
+              <div class="service-content">
+                <p class="desc">{{ service.description }}</p>
+              </div>
+            </div>
+            <div class="service-reveal-bg" data-bg-image="{{ service.background_image.url }}"></div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="service-btn-area text-center wow fadeInUp" data-wow-delay=".3s">
+          <a class="tj-primary-btn" href="{{ service_header.button_link }}">
+            <span class="btn-text"><span>{{ service_header.button_text }}</span></span>
+            <span class="btn-icon"><i class="{{ service_header.button_icon }}"></i></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- end: Service Section -->
+
+
+<!-- start: Marquee Section -->
+<section class="tj-marquee-section section-gap-x">
+  <div class="marquee-wrapper">
+    <div class="swiper marquee-slider">
+      <div class="swiper-wrapper">
+        {% for item in marquee_items %}
+        {% if item.is_active %}
+        <div class="swiper-slide marquee-item">
+          <h4 class="marquee-text">{{ item.title }}</h4>
+          <div class="marquee-img">
+            <img src="{{ item.image.url }}" alt="{{ item.title }}">
+          </div>
+        </div>
+        {% endif %}
+        {% empty %}
+        <div class="swiper-slide marquee-item">
+          <h4 class="marquee-text">Maʼlumot topilmadi</h4>
+          <div class="marquee-img">
+            <img src="{% static 'assets/images/placeholder.webp' %}" alt="Marquee Image">
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+<!-- end: Marquee Section -->
+
+
+<!-- start: Certificate Section -->
+<section class="tj-team-section-2 section-gap">
+  <div class="container">
+    {% if certificate_header %}
+    <div class="row">
+      <div class="col-12">
+        <div class="sec-heading-wrap">
+          <span class="sub-title wow fadeInUp" data-wow-delay=".3s">
+            <i class="{{ certificate_header.sub_title_icon }}"></i>
+            {{ certificate_header.sub_title }}
+          </span>
+          <div class="heading-wrap-content">
+            <div class="sec-heading style-3">
+              <h2 class="sec-title title-anim">{{ certificate_header.main_title }}</h2>
+            </div>
+            {% if certificate_header.button_text and certificate_header.button_link %}
+            <div class="btn-wrap wow fadeInUp" data-wow-delay=".5s">
+              <a class="tj-primary-btn" href="{{ certificate_header.button_link }}">
+                <span class="btn-text"><span>{{ certificate_header.button_text }}</span></span>
+                <span class="btn-icon"><i class="{{ certificate_header.button_icon }}"></i></span>
+              </a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if certificate_cards %}
+    <div class="row">
+      <div class="col-12">
+        <div class="team-wrapper">
+          <!-- Chap tomondagi katta rasm (birinchi sertifikat rasmi asosida) -->
+          <div class="team-img-wrap wow fadeInUp" data-wow-delay=".5s">
+            <div id="team-img" class="team-img">
+              <img src="{{ certificate_cards.first.image.url }}" alt="{{ certificate_cards.first.title }}">
+            </div>
+          </div>
+
+          <!-- Sertifikat kartalari -->
+          <div class="team-item-wrap">
+            {% for card in certificate_cards %}
+            <div class="team-item {% if forloop.first %}active{% endif %} wow fadeInUp" data-wow-delay=".3s"
+              data-src="{{ card.image.url }}">
+              <div class="team-item-inner">
+                <div class="team-content">
+                  <h3 class="title">
+                    {% if card.link %}
+                      <a href="{{ card.link }}">{{ card.title }}</a>
+                    {% else %}
+                      {{ card.title }}
+                    {% endif %}
+                  </h3>
+                  <span class="designation">{{ card.description }}</span>
+                </div>
+
+                {% if card.link %}
+                <a class="team-link" href="{{ card.link }}">
+                  <i class="tji-arrow-right-long"></i>
+                </a>
+                {% endif %}
+              </div>
+              <div class="team-img-wrap">
+                <div class="team-img">
+                  <img src="{{ card.image.url }}" alt="{{ card.title }}">
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+<!-- end: Certificate Section -->
+
+
+<!-- start: News Section -->
+<section class="tj-blog-section-3 section-gap section-gap-x">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        {% if news_header %}
+        <div class="sec-heading style-3 text-center">
+          <span class="sub-title wow fadeInUp" data-wow-delay=".3s">
+            <i class="{{ news_header.sub_title_icon }}"></i>{{ news_header.sub_title }}
+          </span>
+          <h2 class="sec-title title-anim">{{ news_header.main_title }}</h2>
+          {% if news_header.button_text and news_header.button_link %}
+          <div class="btn-wrap wow fadeInUp" data-wow-delay=".5s">
+            <a class="tj-primary-btn" href="{{ news_header.button_link }}">
+              <span class="btn-text"><span>{{ news_header.button_text }}</span></span>
+              <span class="btn-icon"><i class="{{ news_header.button_icon }}"></i></span>
+            </a>
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="row row-gap-4">
+      {% for item in news %}
+      <div class="col-lg-4 col-md-6">
+        <div class="blog-item style-3 wow fadeInUp" data-wow-delay=".{{ forloop.counter }}s">
+          <div class="blog-thumb">
+            <a href="#">
+              <img src="{{ item.image.url }}" alt="{{ item.title }}">
+            </a>
+            <div class="blog-date">
+              <span class="date">{{ item.created_at|date:"d" }}</span>
+              <span class="month">{{ item.created_at|date:"M" }}</span>
+            </div>
+          </div>
+          <div class="blog-content">
+            <div class="blog-meta">
+              {% if item.category %}
+              <span class="categories"><a href="#">{{ item.category.title }}</a></span>
+              {% endif %}
+              <span>By <a href="#">{{ item.author }}</a></span>
+            </div>
+            <h4 class="title">
+              <a href="#">{{ item.title }}</a>
+            </h4>
+            <p>{{ item.short_description|truncatewords:20 }}</p>
+            <a class="text-btn" href="#">
+              <span class="btn-text"><span>Batafsil o‘qish</span></span>
+              <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-center text-muted">Hozircha yangiliklar mavjud emas.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="bg-shape-1">
+    <img src="{% static 'assets/images/shape/pattern-2.svg' %}" alt="">
+  </div>
+  <div class="bg-shape-2">
+    <img src="{% static 'assets/images/shape/pattern-3.svg' %}" alt="">
+  </div>
+</section>
+<!-- end: News Section -->
+
+
+<!-- start: Faq Section -->
+{% if faq_header %}
+<section class="tj-faq-section section-gap">
+  <div class="container">
+    <div class="row justify-content-between">
+      <!-- Chap tomondagi qism -->
+      <div class="col-lg-6">
+        <div class="faq-img-area wow fadeInLeft" data-wow-delay=".3s">
+          <div class="faq-img">
+            {% if faq_header.image %}
+              <img data-speed=".8" src="{{ faq_header.image.url }}" alt="{{ faq_header.title }}">
+            {% else %}
+              <img data-speed=".8" src="{% static 'assets/images/faq/faq.webp' %}" alt="">
+            {% endif %}
+            <h2 class="title title-anim">{{ faq_header.title }}</h2>
+          </div>
+
+          <div class="box-area">
+            <div class="call-box wow fadeInUp" data-wow-delay=".5s">
+              <h4 class="title">{{ faq_header.call_title }}</h4>
+              <span class="call-icon"><i class="{{ faq_header.phone_icon }}"></i></span>
+              <a class="number" href="tel:{{ faq_header.phone_number }}">
+                <span>{{ faq_header.phone_number }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- O‘ng tomondagi qism -->
+      <div class="col-lg-6">
+        <div class="accordion tj-faq style-2" id="faqTwo">
+
+          {% for item in faq_items %}
+          <div class="accordion-item wow fadeInUp" data-wow-delay=".{{ forloop.counter }}s">
+            <button class="faq-title {% if not forloop.first %}collapsed{% endif %}"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#faqTwo-{{ forloop.counter }}"
+              aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+              {{ item.question }}
+            </button>
+
+            <div id="faqTwo-{{ forloop.counter }}"
+              class="collapse {% if forloop.first %}show{% endif %}"
+              data-bs-parent="#faqTwo">
+              <div class="accordion-body faq-text">
+                <p>{{ item.answer }}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+<!-- end: Faq Section -->
+</main>
+
+{% include 'components/footer.html' %}
+    </div>
+  </div>
+{% endblock %}

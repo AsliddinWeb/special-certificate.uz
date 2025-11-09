@@ -1,0 +1,314 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+      <main id="primary" class="site-main">
+
+        <div class="space-for-header"></div>
+        <!-- start: Breadcrumb Section -->
+        <section class="tj-page-header section-gap-x" data-bg-image="{% static 'assets/images/bg/pheader-bg.webp' %}">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="tj-page-header-content text-center">
+                  <h1 class="tj-page-title">About Us</h1>
+                  <div class="tj-page-link">
+                    <span><i class="tji-home"></i></span>
+                    <span>
+                      <a href="index.html">Home</a>
+                    </span>
+                    <span><i class="tji-arrow-right"></i></span>
+                    <span>
+                      <span>About Us</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="page-header-overlay" data-bg-image="assets/images/shape/pheader-overlay.webp"></div>
+        </section>
+        <!-- end: Breadcrumb Section -->
+
+        <!-- start: Choose Section -->
+        <section id="choose" class="tj-choose-section section-gap">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <div class="sec-heading style-3 text-center">
+                  <span class="sub-title wow fadeInUp" data-wow-delay=".3s">
+                    <i class="{{ choose_header.sub_title_icon }}"></i>{{ choose_header.sub_title }}
+                  </span>
+                  <h2 class="sec-title title-anim">{{ choose_header.main_title }}</h2>
+                </div>
+              </div>
+            </div>
+            <div class="row row-gap-4 rightSwipeWrap">
+              {% for card in choose_cards %}
+              <div class="col-xl-3 col-md-6">
+                <div class="choose-box style-2 right-swipe">
+                  <div class="choose-content">
+                    <div class="choose-icon">
+                      <i class="{{ card.icon }}"></i>
+                    </div>
+                    <h4 class="title">{{ card.title }}</h4>
+                    <p class="desc">{{ card.description }}</p>
+                    <a class="text-btn" href="{{ card.button_link }}">
+                      <span class="btn-text"><span>{{ card.button_text }}</span></span>
+                      <span class="btn-icon"><i class="{{ card.button_icon }}"></i></span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </section>
+        <!-- end: Choose Section -->
+
+        <!-- start: About Section -->
+        <section class="tj-about-section-2 section-gap section-gap-x">
+          <div class="container">
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 order-lg-1 order-2">
+                <div class="about-img-area style-2 wow fadeInLeft" data-wow-delay=".3s">
+                  <div class="about-img overflow-hidden">
+                    <img data-speed=".8" src="{{ about_section.main_image.url }}" alt="Laboratoriya rasmi">
+                  </div>
+                  <div class="box-area">
+                    <div class="progress-box wow fadeInUp" data-wow-delay=".3s">
+                      <h4 class="title">{{ about_section.progress_box_title }}</h4>
+                      <ul class="tj-progress-list">
+                        {% for progress in about_section.progress_items.all %}
+                        <li>
+                          <h6 class="tj-progress-title">{{ progress.title }}</h6>
+                          <div class="tj-progress">
+                            <span class="tj-progress-percent">{{ progress.percent }}%</span>
+                            <div class="tj-progress-bar" data-percent="{{ progress.percent }}"></div>
+                          </div>
+                        </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 order-lg-2 order-1">
+                <div class="about-content-area">
+                  <div class="sec-heading style-3">
+                    <span class="sub-title wow fadeInUp" data-wow-delay=".3s">
+                      <i class="{{ about_section.sub_title_icon }}"></i>{{ about_section.sub_title }}
+                    </span>
+                    <h2 class="sec-title title-anim">{{ about_section.main_title }}</h2>
+                  </div>
+                </div>
+                <div class="about-bottom-area">
+                  <div class="mission-vision-box wow fadeInLeft" data-wow-delay=".5s">
+                    <h4 class="title">{{ about_section.mission_title }}</h4>
+                    <p class="desc">{{ about_section.mission_description }}</p>
+                    <ul class="list-items">
+                      <li><i class="tji-check"></i>{{ about_section.mission_item1 }}</li>
+                      <li><i class="tji-check"></i>{{ about_section.mission_item2 }}</li>
+                      <li><i class="tji-check"></i>{{ about_section.mission_item3 }}</li>
+                    </ul>
+                  </div>
+                  <div class="mission-vision-box wow fadeInRight" data-wow-delay=".5s">
+                    <h4 class="title">{{ about_section.vision_title }}</h4>
+                    <p class="desc">{{ about_section.vision_description }}</p>
+                    <ul class="list-items">
+                      <li><i class="tji-check"></i>{{ about_section.vision_item1 }}</li>
+                      <li><i class="tji-check"></i>{{ about_section.vision_item2 }}</li>
+                      <li><i class="tji-check"></i>{{ about_section.vision_item3 }}</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="about-btn-area wow fadeInUp" data-wow-delay=".5s">
+                  <a class="tj-primary-btn" href="{{ about_section.button_link }}">
+                    <span class="btn-text"><span>{{ about_section.button_text }}</span></span>
+                    <span class="btn-icon"><i class="{{ about_section.button_icon }}"></i></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% if about_section.bg_shape_1 %}
+          <div class="bg-shape-1">
+            <img src="{{ about_section.bg_shape_1.url }}" alt="">
+          </div>
+          {% endif %}
+          {% if about_section.bg_shape_2 %}
+          <div class="bg-shape-2">
+            <img src="{{ about_section.bg_shape_2.url }}" alt="">
+          </div>
+          {% endif %}
+        </section>
+        <!-- end: About Section -->
+
+        <!-- start: Client Section -->
+        <section class="tj-client-section client-section-gap-2 wow fadeInUp" data-wow-delay=".4s">
+          <div class="container-fluid client-container">
+            <div class="row">
+              <div class="col-12">
+                <div class="client-content">
+
+                    {{ about_page_title.client_text|safe }}
+                </div>
+                <div class="swiper client-slider client-slider-1">
+                  <div class="swiper-wrapper">
+                      {% for client in client_logos %}
+                        <div class="swiper-slide client-item">
+                          <div class="client-logo">
+                            <img src="{{ client.logo.url }}" alt="{{ client.name }}">
+                          </div>
+                        </div>
+                      {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- end: Client Section -->
+
+<!-- start: Team Section -->
+<section class="tj-team-section-3 section-gap section-gap-x">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sec-heading text-center">
+          {% if team_section %}
+          <span class="sub-title wow fadeInUp" data-wow-delay=".3s">
+            <i class="tji-box"></i> {{ team_section.sub_title }}
+          </span>
+          <h2 class="sec-title title-anim">{{ team_section.main_title|safe }}</h2>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="row leftSwipeWrap">
+      {% for member in team_members %}
+      <div class="col-lg-3 col-sm-6">
+        <div class="team-item left-swipe">
+          <div class="team-img">
+            <div class="team-img-inner">
+              <img src="{{ member.image.url }}" alt="{{ member.full_name }}">
+            </div>
+            <div class="social-links">
+              <ul>
+                {% if member.facebook_url %}
+                <li><a href="{{ member.facebook_url }}" target="_blank">
+                  <i class="fa-brands fa-facebook-f"></i></a>
+                </li>
+                {% endif %}
+                {% if member.instagram_url %}
+                <li><a href="{{ member.instagram_url }}" target="_blank">
+                  <i class="fa-brands fa-instagram"></i></a>
+                </li>
+                {% endif %}
+                {% if member.twitter_url %}
+                <li><a href="{{ member.twitter_url }}" target="_blank">
+                  <i class="fa-brands fa-x-twitter"></i></a>
+                </li>
+                {% endif %}
+                {% if member.linkedin_url %}
+                <li><a href="{{ member.linkedin_url }}" target="_blank">
+                  <i class="fa-brands fa-linkedin-in"></i></a>
+                </li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+          <div class="team-content">
+            <h4 class="title">
+              <a href="#">{{ member.full_name }}</a>
+            </h4>
+            <span class="designation">{{ member.designation }}</span>
+            {% if member.email %}
+            <a class="mail-at" href="mailto:{{ member.email }}">
+              <i class="tji-at"></i>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="bg-shape-1">
+    <img src="{% static 'assets/images/shape/pattern-2.svg' %}" alt="">
+  </div>
+  <div class="bg-shape-2">
+    <img src="{% static 'assets/images/shape/pattern-3.svg' %}" alt="">
+  </div>
+</section>
+<!-- end: Team Section -->
+
+<!-- start: Faq Section -->
+{% if faq_header %}
+<section class="tj-faq-section section-gap">
+  <div class="container">
+    <div class="row justify-content-between">
+      <!-- Chap tomondagi qism -->
+      <div class="col-lg-6">
+        <div class="faq-img-area wow fadeInLeft" data-wow-delay=".3s">
+          <div class="faq-img">
+            {% if faq_header.image %}
+              <img data-speed=".8" src="{{ faq_header.image.url }}" alt="{{ faq_header.title }}">
+            {% else %}
+              <img data-speed=".8" src="{% static 'assets/images/faq/faq.webp' %}" alt="">
+            {% endif %}
+            <h2 class="title title-anim">{{ faq_header.title }}</h2>
+          </div>
+
+          <div class="box-area">
+            <div class="call-box wow fadeInUp" data-wow-delay=".5s">
+              <h4 class="title">{{ faq_header.call_title }}</h4>
+              <span class="call-icon"><i class="{{ faq_header.phone_icon }}"></i></span>
+              <a class="number" href="tel:{{ faq_header.phone_number }}">
+                <span>{{ faq_header.phone_number }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- O‘ng tomondagi qism -->
+      <div class="col-lg-6">
+        <div class="accordion tj-faq style-2" id="faqTwo">
+
+          {% for item in faq_items %}
+          <div class="accordion-item wow fadeInUp" data-wow-delay=".{{ forloop.counter }}s">
+            <button class="faq-title {% if not forloop.first %}collapsed{% endif %}"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#faqTwo-{{ forloop.counter }}"
+              aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+              {{ item.question }}
+            </button>
+
+            <div id="faqTwo-{{ forloop.counter }}"
+              class="collapse {% if forloop.first %}show{% endif %}"
+              data-bs-parent="#faqTwo">
+              <div class="accordion-body faq-text">
+                <p>{{ item.answer }}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+<!-- end: Faq Section -->
+
+      </main>
+
+{% include 'components/footer.html' %}
+    </div>
+  </div>
+{% endblock %}
