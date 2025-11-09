@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Global APPS
+    'modeltranslation',
+
     # Local APPS
     'apps.main_app',
     'apps.news_app',
@@ -56,6 +59,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # ← YANGI!
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -80,6 +84,8 @@ TEMPLATES = [
                 'apps.settings_app.context_processors.header_settings',
                 'apps.settings_app.context_processors.footer_settings',
                 'apps.settings_app.context_processors.site_settings',
+
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -116,14 +122,42 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'uz'
+# ============================================
+# INTERNATIONALIZATION SETTINGS (YANGI!)
+# ============================================
 
+# Til sozlamalari
+LANGUAGE_CODE = 'uz'  # Default til
+
+# Qo'llab-quvvatlanadigan tillar
+LANGUAGES = (
+    ('uz', 'O\'zbekcha'),
+    ('ru', 'Русский'),
+    ('en', 'English'),
+)
+
+# Locale fayllar joylashuvi
+LOCALE_PATHS = [
+    BASE_DIR / '../locale',
+]
+
+# ModelTranslation default tili
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
+
+# Fallback mexanizmi (agar tarjima topilmasa)
+MODELTRANSLATION_FALLBACK_LANGUAGES = ('uz', 'ru', 'en')
+
+# Auto-populate (yangi obyekt yaratilganda boshqa tillarni avtomatik to'ldirish)
+MODELTRANSLATION_AUTO_POPULATE = True
+
+# Prepopulate (mavjud tildan boshqa tillarga avtomatik nusxalash)
+MODELTRANSLATION_PREPOPULATE_LANGUAGE = 'uz'
+
+# Internationalization (mavjud bo'lsa o'zgartiring)
 TIME_ZONE = 'Asia/Tashkent'
-
 USE_I18N = True
-
+USE_L10N = True  # ← Agar yo'q bo'lsa qo'shing
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
