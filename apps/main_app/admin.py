@@ -6,10 +6,8 @@ from django.contrib.auth.models import User, Group
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 from unfold.admin import ModelAdmin, TabularInline
 
-# ============================================
-# YANGI: TabbedTranslationAdmin ishlatamiz
-# ============================================
 from modeltranslation.admin import TabbedTranslationAdmin
+import apps.main_app.translation
 
 from django.utils.html import format_html
 from .models import (

@@ -1,11 +1,17 @@
 from django.contrib import admin
-from .models import NewsCategory, News, NewsHeader, NewsStaticTexts
-
 from unfold.admin import ModelAdmin
+
+# ============================================
+# TRANSLATION IMPORT
+# ============================================
+from modeltranslation.admin import TabbedTranslationAdmin
+import apps.news_app.translation  # ← QOSHILDI
+
+from .models import NewsCategory, News, NewsHeader, NewsStaticTexts
 
 
 @admin.register(NewsCategory)
-class NewsCategoryAdmin(ModelAdmin):
+class NewsCategoryAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ("title", "slug", "is_active", "created_at")
     list_filter = ("is_active",)
     search_fields = ("title",)
@@ -30,7 +36,7 @@ class NewsCategoryAdmin(ModelAdmin):
 
 
 @admin.register(News)
-class NewsAdmin(ModelAdmin):
+class NewsAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ("title", "category", "slug", "views", "is_active", "created_at")
     list_filter = ("category", "is_active", "created_at")
     search_fields = ("title", "short_description", "author")
@@ -43,7 +49,7 @@ class NewsAdmin(ModelAdmin):
         ("Asosiy ma'lumotlar", {
             "fields": ("title", "slug", "category", "image", "short_description", "content")
         }),
-        ("Qo‘shimcha ma'lumotlar", {
+        ("Qo'shimcha ma'lumotlar", {
             "fields": ("author", "views", "is_active")
         }),
         ("Vaqt ma'lumotlari", {
@@ -58,7 +64,7 @@ class NewsAdmin(ModelAdmin):
 
 
 @admin.register(NewsHeader)
-class NewsHeaderAdmin(ModelAdmin):
+class NewsHeaderAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ('title', 'home_link_text')
     search_fields = ('title',)
 
@@ -73,7 +79,7 @@ class NewsHeaderAdmin(ModelAdmin):
 
 
 @admin.register(NewsStaticTexts)
-class NewsStaticTextsAdmin(ModelAdmin):
+class NewsStaticTextsAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ('search_text', 'latest_news', 'categories')
 
     fieldsets = (

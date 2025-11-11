@@ -1,23 +1,31 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin, StackedInline
+
+# ============================================
+# TRANSLATION IMPORT
+# ============================================
+from modeltranslation.admin import TabbedTranslationAdmin
+import apps.pages_app.translation  # ← QOSHILDI
+
 from .models import (AboutPageTitle, TeamSection, TeamMember,
                      ContactHeader, ContactInfo, ContactItem, ContactItemDetail, ContactForm,
                      ContactFormSettings, CtaSection
         )
 
-from unfold.admin import ModelAdmin, StackedInline
-
 
 @admin.register(AboutPageTitle)
-class AboutPageTitleAdmin(ModelAdmin):
-    list_display = ['id', 'title_home', 'title_about']
+class AboutPageTitleAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
+    list_display = ['title_home', 'title_about']
+
 
 @admin.register(TeamSection)
-class TeamSectionAdmin(ModelAdmin):
+class TeamSectionAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ['main_title', 'is_active', 'updated_at']
     list_filter = ['is_active']
 
+
 @admin.register(TeamMember)
-class TeamMemberAdmin(ModelAdmin):
+class TeamMemberAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ['full_name', 'designation', 'order', 'is_active']
     list_filter = ['is_active']
     search_fields = ['full_name', 'designation']
@@ -25,7 +33,7 @@ class TeamMemberAdmin(ModelAdmin):
 
 
 @admin.register(ContactHeader)
-class ContactHeaderAdmin(ModelAdmin):
+class ContactHeaderAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ('title', 'home_link_text')
     search_fields = ('title',)
 
@@ -53,7 +61,7 @@ class ContactItemInline(StackedInline):
 
 
 @admin.register(ContactInfo)
-class ContactInfoAdmin(ModelAdmin):
+class ContactInfoAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ('title', 'subtitle')
     search_fields = ('title', 'subtitle')
     inlines = [ContactItemInline]
@@ -66,7 +74,7 @@ class ContactInfoAdmin(ModelAdmin):
 
 
 @admin.register(ContactItem)
-class ContactItemAdmin(ModelAdmin):
+class ContactItemAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ('title', 'icon', 'contact_info', 'order')
     list_filter = ('icon', 'contact_info')
     search_fields = ('title', 'description')
@@ -84,7 +92,7 @@ class ContactItemAdmin(ModelAdmin):
 
 
 @admin.register(ContactItemDetail)
-class ContactItemDetailAdmin(ModelAdmin):
+class ContactItemDetailAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ('display_text', 'link_type', 'contact_item', 'is_active', 'order')
     list_filter = ('link_type', 'is_active')
     search_fields = ('display_text', 'link_value')
@@ -101,7 +109,7 @@ class ContactItemDetailAdmin(ModelAdmin):
 
 
 @admin.register(ContactForm)
-class ContactFormAdmin(ModelAdmin):
+class ContactFormAdmin(ModelAdmin):  # ← Bu yerda translation kerak emas
     list_display = ('full_name', 'email', 'phone', 'subject', 'created_at', 'is_read')
     list_filter = ('is_read', 'created_at')
     search_fields = ('full_name', 'email', 'phone', 'subject', 'message')
@@ -123,7 +131,7 @@ class ContactFormAdmin(ModelAdmin):
 
 
 @admin.register(ContactFormSettings)
-class ContactFormSettingsAdmin(ModelAdmin):
+class ContactFormSettingsAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ('title',)
 
     fieldsets = (
@@ -143,7 +151,7 @@ class ContactFormSettingsAdmin(ModelAdmin):
 
 
 @admin.register(CtaSection)
-class CtaSectionAdmin(ModelAdmin):
+class CtaSectionAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ('title', 'button_text')
     search_fields = ('title', 'button_text')
 

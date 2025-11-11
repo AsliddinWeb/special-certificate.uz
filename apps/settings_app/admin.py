@@ -1,10 +1,16 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin, TabularInline, StackedInline
+
+# ============================================
+# TRANSLATION IMPORT
+# ============================================
+from modeltranslation.admin import TabbedTranslationAdmin
+import apps.settings_app.translation  # ← QOSHILDI
+
 from .models import (
     HeaderSettings, MenuItem,
     FooterSettings, FooterColumn, FooterLink, Newsletter
 )
-
-from unfold.admin import ModelAdmin, TabularInline, StackedInline
 
 
 class MenuItemInline(TabularInline):
@@ -14,7 +20,7 @@ class MenuItemInline(TabularInline):
 
 
 @admin.register(HeaderSettings)
-class HeaderSettingsAdmin(ModelAdmin):
+class HeaderSettingsAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ('phone', 'email', 'is_active', 'updated_at')
     list_filter = ('is_active', 'search_enabled')
     search_fields = ('phone', 'email', 'address')
@@ -40,7 +46,7 @@ class HeaderSettingsAdmin(ModelAdmin):
 
 
 @admin.register(MenuItem)
-class MenuItemAdmin(ModelAdmin):
+class MenuItemAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ('title', 'url', 'parent', 'order', 'is_active', 'is_mega_menu')
     list_filter = ('is_active', 'is_mega_menu', 'header_settings')
     search_fields = ('title', 'url')
@@ -61,7 +67,7 @@ class FooterColumnInline(StackedInline):
 
 
 @admin.register(FooterSettings)
-class FooterSettingsAdmin(ModelAdmin):
+class FooterSettingsAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ('phone', 'email', 'is_active', 'newsletter_enabled', 'updated_at')
     list_filter = ('is_active', 'newsletter_enabled', 'show_awards', 'show_social_links')
     search_fields = ('phone', 'email', 'address', 'description')
@@ -93,7 +99,7 @@ class FooterSettingsAdmin(ModelAdmin):
 
 
 @admin.register(FooterColumn)
-class FooterColumnAdmin(ModelAdmin):
+class FooterColumnAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ('title', 'footer_settings', 'order', 'is_active')
     list_filter = ('is_active', 'footer_settings')
     search_fields = ('title',)
@@ -102,7 +108,7 @@ class FooterColumnAdmin(ModelAdmin):
 
 
 @admin.register(FooterLink)
-class FooterLinkAdmin(ModelAdmin):
+class FooterLinkAdmin(TabbedTranslationAdmin, ModelAdmin):  # ← TabbedTranslationAdmin qo'shildi
     list_display = ('title', 'column', 'url', 'badge_text', 'order', 'is_active')
     list_filter = ('is_active', 'open_new_tab', 'column')
     search_fields = ('title', 'url')
@@ -110,7 +116,7 @@ class FooterLinkAdmin(ModelAdmin):
 
 
 @admin.register(Newsletter)
-class NewsletterAdmin(ModelAdmin):
+class NewsletterAdmin(ModelAdmin):  # ← Bu yerda translation kerak emas
     list_display = ('email', 'agreed_to_terms', 'is_active', 'subscribed_at')
     list_filter = ('is_active', 'agreed_to_terms', 'subscribed_at')
     search_fields = ('email',)

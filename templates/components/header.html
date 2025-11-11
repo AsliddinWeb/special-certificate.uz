@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 
 <!-- back to top start -->
 <div id="tj-back-to-top"><span id="tj-back-to-top-percentage"></span></div>
@@ -39,6 +40,8 @@
         </div>
       </div>
       {% endif %}
+
+
 
       <div class="hamburger_menu">
         <div class="mobile_menu"></div>
@@ -148,6 +151,22 @@
                     {% endif %}
                   </ul>
                 </div>
+                  <div class="language-switcher" style="margin-left: 15px;">
+                    <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+                      {% csrf_token %}
+                      <input name="next" type="hidden" value="{{ request.get_full_path }}" />
+                      <select name="language" onchange="this.form.submit()" class="language-select" style="padding: 5px; border-radius: 4px;">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% for lang_code, lang_name in LANGUAGES %}
+                          <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>
+                            {{ lang_code|upper }}
+                          </option>
+                        {% endfor %}
+                      </select>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -226,6 +245,7 @@
                 </ul>
               </nav>
             </div>
+
 
             <!-- header right info -->
             <div class="header-right-item d-none d-lg-inline-flex">

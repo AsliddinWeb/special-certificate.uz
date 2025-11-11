@@ -1,13 +1,17 @@
 from django.contrib import admin
 from unfold.admin import ModelAdmin
 
+# ============================================
+# TRANSLATION IMPORT
+# ============================================
+from modeltranslation.admin import TabbedTranslationAdmin
+import apps.services_app.translation  # ← QOSHILDI
+
 from .models import ServiceHeader, ServiceCategory, Service
 
 
-
-
 @admin.register(ServiceHeader)
-class ServiceHeaderAdmin(ModelAdmin):
+class ServiceHeaderAdmin(TabbedTranslationAdmin, ModelAdmin):
     list_display = ('title', 'home_link_text', 'read_more_text')
     search_fields = ('title',)
 
@@ -22,7 +26,7 @@ class ServiceHeaderAdmin(ModelAdmin):
 
 
 @admin.register(ServiceCategory)
-class ServiceCategoryAdmin(ModelAdmin):
+class ServiceCategoryAdmin(TabbedTranslationAdmin, ModelAdmin):
     list_display = ('title', 'slug', 'icon', 'order', 'is_active')
     list_filter = ('is_active',)
     search_fields = ('title', 'slug')
@@ -40,7 +44,7 @@ class ServiceCategoryAdmin(ModelAdmin):
 
 
 @admin.register(Service)
-class ServiceAdmin(ModelAdmin):
+class ServiceAdmin(TabbedTranslationAdmin, ModelAdmin):
     list_display = ('title', 'category', 'slug', 'order', 'is_active')
     list_filter = ('is_active', 'category', 'created_at')
     search_fields = ('title', 'slug', 'short_description')
@@ -52,9 +56,14 @@ class ServiceAdmin(ModelAdmin):
             'fields': ('category', 'title', 'slug', 'icon')
         }),
         ('Tafsilotlar', {
-            'fields': ('short_description', 'full_description', 'image')
+            'fields': ('description', 'short_description', 'full_description', 'image', 'background_image')
         }),
         ('Sozlamalar', {
             'fields': ('animation_delay', 'order', 'is_active')
         }),
+        ('Vaqt ma\'lumotlari', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
     )
+    readonly_fields = ('created_at', 'updated_at')
