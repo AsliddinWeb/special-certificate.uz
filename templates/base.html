@@ -22,10 +22,12 @@
   <div class="body-overlay"></div>
 
   {% comment %}
-  {% include 'components/loader.html' %}
+    {% include 'components/loader.html' %}
   {% endcomment %}
 
-  {% include 'components/header.html' %}
+  {% block header %}
+        {% include 'components/header.html' %}
+  {% endblock %}
 
   {% block content %}
   {% endblock content %}
