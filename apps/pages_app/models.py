@@ -321,9 +321,11 @@ class ContactFormSettings(models.Model):
         verbose_name="Xato xabari"
     )
 
-    map_url = models.URLField(
+    map_url = models.TextField(
         verbose_name="Xarita URL",
-        help_text="Google Maps embed URL"
+        help_text="Google Maps embed URL",
+        null=True,
+        blank=True
     )
     animation_delay = models.CharField(
         max_length=10,
