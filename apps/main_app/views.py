@@ -21,7 +21,7 @@ def home_page(request):
     certificate_header = CertificateSectionHeader.objects.filter(is_active=True).first()
     certificate_cards = CertificateCard.objects.filter(is_active=True)
     news_header = NewsSectionHeader.objects.filter(is_active=True).first()
-    news_static_texts = NewsStaticTexts.objects.all()
+    news_static_texts = NewsStaticTexts.objects.last()
     news = News.objects.filter(is_active=True)[:3]
     faq_header = FaqHeader.objects.filter(is_active=True).first()
     faq_items = FaqItem.objects.filter(is_active=True)
