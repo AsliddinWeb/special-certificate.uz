@@ -12,6 +12,8 @@ class AboutPageTitle(models.Model):
     )
     client_text = models.TextField(verbose_name="Client logo text", null=True, blank=True)
 
+    background_image = models.ImageField(upload_to="images/about/", null=True, blank=True)
+
     class Meta:
         verbose_name = "1. About Sahifa sarlavhasi"
         verbose_name_plural = "1. About Sahifa sarlavhalari"
