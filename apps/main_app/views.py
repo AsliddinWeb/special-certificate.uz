@@ -5,7 +5,7 @@ from .models import (BannerSection, ClientLogo, ChooseSectionHeader, ChooseCard,
                      NewsSectionHeader, FaqHeader, FaqItem
     )
 
-from apps.news_app.models import News
+from apps.news_app.models import News, NewsStaticTexts
 
 
 def home_page(request):
@@ -21,6 +21,7 @@ def home_page(request):
     certificate_header = CertificateSectionHeader.objects.filter(is_active=True).first()
     certificate_cards = CertificateCard.objects.filter(is_active=True)
     news_header = NewsSectionHeader.objects.filter(is_active=True).first()
+    news_static_texts = NewsStaticTexts.objects.all()
     news = News.objects.filter(is_active=True)[:3]
     faq_header = FaqHeader.objects.filter(is_active=True).first()
     faq_items = FaqItem.objects.filter(is_active=True)
@@ -37,6 +38,7 @@ def home_page(request):
         'certificate_header': certificate_header,
         'certificate_cards': certificate_cards,
         'news_header': news_header,
+        'news_static_texts': news_static_texts,
         'news': news,
         'faq_header': faq_header,
         'faq_items': faq_items,
